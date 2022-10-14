@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{8952eec2-3ce5-4010-9ad1-96e33d9f2523}</ProjectGuid>
+    <RootNamespace>bm_replay_manager</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>replay_manager</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="BakkesMod.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="BakkesMod.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)plugins\</OutDir>
+    <IntDir>$(SolutionDir)build\.intermediates\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)plugins\</OutDir>
+    <IntDir>$(SolutionDir)build\.intermediates\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)src\ext\fmt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PreBuildEvent>
+      <Command>powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File update_version.ps1 "./version.h"</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\ext\CPPRP\exceptions\ParseException.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\ext\CPPRP\exceptions\ReplayException.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\ext\CPPRP\ReplayFile.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\ext\fmt\src\format.cc" />
+    <ClCompile Include="src\ext\fmt\src\os.cc" />
+    <ClCompile Include="src\ext\IMGUI\imgui.cpp" />
+    <ClCompile Include="src\ext\IMGUI\imguivariouscontrols.cpp" />
+    <ClCompile Include="src\ext\IMGUI\imgui_additions.cpp" />
+    <ClCompile Include="src\ext\IMGUI\imgui_demo.cpp" />
+    <ClCompile Include="src\ext\IMGUI\imgui_draw.cpp" />
+    <ClCompile Include="src\ext\IMGUI\imgui_impl_dx11.cpp" />
+    <ClCompile Include="src\ext\IMGUI\imgui_impl_win32.cpp" />
+    <ClCompile Include="src\ext\IMGUI\imgui_rangeslider.cpp" />
+    <ClCompile Include="src\ext\IMGUI\imgui_searchablecombo.cpp" />
+    <ClCompile Include="src\ext\IMGUI\imgui_timeline.cpp" />
+    <ClCompile Include="src\ext\IMGUI\imgui_widgets.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\bm_replay_manager.cpp" />
+    <ClCompile Include="src\bm_replay_managerGUI.cpp" />
+    <ClCompile Include="src\replay\manager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ext\CPPRP\CPPBitReader.h" />
+    <ClInclude Include="src\ext\CPPRP\CRC.h" />
+    <ClInclude Include="src\ext\CPPRP\data\ArcheTypes.h" />
+    <ClInclude Include="src\ext\CPPRP\data\GameClasses.h" />
+    <ClInclude Include="src\ext\CPPRP\data\NetworkData.h" />
+    <ClInclude Include="src\ext\CPPRP\data\ReplayFileData.h" />
+    <ClInclude Include="src\ext\CPPRP\exceptions\ParseException.h" />
+    <ClInclude Include="src\ext\CPPRP\exceptions\ReplayException.h" />
+    <ClInclude Include="src\ext\CPPRP\generated\ClassExtensions.h" />
+    <ClInclude Include="src\ext\CPPRP\generated\GameClassMacros.h" />
+    <ClInclude Include="src\ext\CPPRP\generated\NetworkDataParsersGenerated.h" />
+    <ClInclude Include="src\ext\CPPRP\NetworkDataParsers.h" />
+    <ClInclude Include="src\ext\CPPRP\PropertyParser.h" />
+    <ClInclude Include="src\ext\CPPRP\ReplayFile.h" />
+    <ClInclude Include="src\ext\CPPRP\utils\tostring.h" />
+    <ClInclude Include="src\ext\IMGUI\imconfig.h" />
+    <ClInclude Include="src\ext\IMGUI\imgui.h" />
+    <ClInclude Include="src\ext\IMGUI\imguivariouscontrols.h" />
+    <ClInclude Include="src\ext\IMGUI\imgui_additions.h" />
+    <ClInclude Include="src\ext\IMGUI\imgui_impl_dx11.h" />
+    <ClInclude Include="src\ext\IMGUI\imgui_impl_win32.h" />
+    <ClInclude Include="src\ext\IMGUI\imgui_internal.h" />
+    <ClInclude Include="src\ext\IMGUI\imgui_rangeslider.h" />
+    <ClInclude Include="src\ext\IMGUI\imgui_searchablecombo.h" />
+    <ClInclude Include="src\ext\IMGUI\imgui_timeline.h" />
+    <ClInclude Include="src\ext\IMGUI\imstb_rectpack.h" />
+    <ClInclude Include="src\ext\IMGUI\imstb_textedit.h" />
+    <ClInclude Include="src\ext\IMGUI\imstb_truetype.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="src\bm_replay_manager.h" />
+    <ClInclude Include="src\replay\manager.h" />
+    <ClInclude Include="src\replay\replay.h" />
+    <ClInclude Include="src\replay\thread_pool.hpp" />
+    <ClInclude Include="src\version.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\bm_replay_manager.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
